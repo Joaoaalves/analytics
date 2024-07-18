@@ -1,12 +1,11 @@
-import { Rubik } from "next/font/google";
+import TokenManager from '../components/TokenManager';
 
-const font = Rubik({ subsets: ["latin"] });
-
-export default function Home() {
+const Home: React.FC = () => {
   return (
-    <main
-      className={`${font.className}`}
-    >
-    </main>
+    <div>
+      <TokenManager />
+    </div>
   );
-}
+};
+
+export default Home;
