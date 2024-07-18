@@ -1,9 +1,9 @@
 {
-  "name": "seo-dashboard",
+  "name": "analytics",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -18,6 +18,7 @@
     "mongodb": "^6.8.0",
     "mongoose": "^8.5.1",
     "next": "14.2.5",
+    "nookies": "^2.5.2",
     "react": "^18",
     "react-dom": "^18",
     "tailwind-merge": "^2.4.0",

@@ -1,7 +1,7 @@
 import mongoose, { ConnectOptions } from 'mongoose';
 import { MongooseCache } from '@/types/mongoose';
-const MONGODB_URI: string | undefined = process.env.MONGODB_URI; 
-console.log(MONGODB_URI)
+const MONGODB_URI: string | undefined = process.env.MONGODB_URI;
+
 declare global {
   // eslint-disable-next-line no-var
   var mongooseCache: MongooseCache;
