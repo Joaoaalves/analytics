@@ -1,3 +1,3 @@
 export interface Auth0TokenContextType {
-  getAccessToken: () => string | null;
+    getAccessToken: () => string | null;
 }

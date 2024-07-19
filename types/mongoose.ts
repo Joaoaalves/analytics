@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 export interface MongooseCache {
-  conn: typeof mongoose | null;
-  promise: Promise<typeof mongoose> | null;
+    conn: typeof mongoose | null;
+    promise: Promise<typeof mongoose> | null;
 }

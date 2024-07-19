@@ -1,8 +1,8 @@
 export interface IApplication {
-  ApplicationId: string,
-  ApplicationName: string
+    ApplicationId: string;
+    ApplicationName: string;
 }
 
 export interface AWSGateway {
-  getApplications: (accessToken: string) => Promise<IApplication[] | []>;
+    getApplications: (accessToken: string) => Promise<IApplication[] | []>;
 }
