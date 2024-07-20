@@ -9,7 +9,7 @@ interface AccesToken {
     expiresAt: Date;
 }
 
-export async function getAccessToken(): Promise<AccesToken | undefined> {
+export async function getAccessToken(): Promise<AccesToken | null> {
     'use server';
     try {
         await dbConnect();
@@ -50,6 +50,6 @@ export async function getAccessToken(): Promise<AccesToken | undefined> {
         };
     } catch (error) {
         console.error('Error in auth0token API:', error);
-        return;
+        return null;
     }
 }

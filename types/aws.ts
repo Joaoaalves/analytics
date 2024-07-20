@@ -6,3 +6,10 @@ export interface IApplication {
 export interface AWSGateway {
     getApplications: (accessToken: string) => Promise<IApplication[] | []>;
 }
+
+export interface IAction {
+    EventId: string;
+    EventType: string;
+    Timestamp: Date;
+    Details: object;
+}
