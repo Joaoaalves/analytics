@@ -2,6 +2,14 @@
 import axios from 'axios';
 import type { IAction } from '@/types/aws';
 
+function sortActionsByTimestamp(actions:IAction[]){
+    actions.sort((a, b) => {
+        const dateA = new Date(a.Timestamp).getTime();
+        const dateB = new Date(b.Timestamp).getTime();
+        return dateB - dateA;
+    });
+}
+
 export async function getActions(
     accessToken: string,
     applicationId: string
@@ -16,6 +24,7 @@ export async function getActions(
             }
         );
         const actions: IAction[] = response.data;
+        sortActionsByTimestamp(actions)
         return actions;
     } catch (error) {
         console.log(error);

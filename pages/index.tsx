@@ -30,6 +30,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production'
             });
+            
             nookies.set(ctx, 'tokenExpiration', expiresAt.toISOString(), {
                 maxAge: maxAge,
                 path: '/',

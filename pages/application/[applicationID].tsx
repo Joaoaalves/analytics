@@ -14,7 +14,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
                 accessToken,
                 applicationID as string
             );
-
+                
             return {
                 props: {
                     data: actions,
