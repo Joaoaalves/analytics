@@ -25,12 +25,17 @@ const config = {
                 background: 'hsl(var(--background))',
                 foreground: 'hsl(var(--foreground))',
                 primary: {
-                    DEFAULT: 'hsl(var(--primary))',
-                    foreground: 'hsl(var(--primary-foreground))'
-                },
-                secondary: {
-                    DEFAULT: 'hsl(var(--secondary))',
-                    foreground: 'hsl(var(--secondary-foreground))'
+                    DEFAULT: '#b7094c',
+                    2: '#a01a58',
+                    3: '#892b64',
+                    4: '#723c70',
+                  },
+                  medium: '#5c4d7d',
+                  secondary: {
+                    DEFAULT: '#0091ad',
+                    2: '#1780a1',
+                    3: '#2e6f95',
+                    4: '#455e89',
                 },
                 destructive: {
                     DEFAULT: 'hsl(var(--destructive))',
