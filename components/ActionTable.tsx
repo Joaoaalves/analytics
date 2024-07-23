@@ -21,6 +21,8 @@ import {
     TableRow
 } from '@/components/ui/table';
 
+import { IoMdArrowDropdown, IoMdArrowDropup } from 'react-icons/io';
+
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import ActionDetails from '@/components/ActionDetails';
@@ -64,11 +66,14 @@ export const columns: ColumnDef<IEvent>[] = [
             return (
                 <Button
                     variant="ghost"
-                    onClick={() =>
-                        column.toggleSorting(column.getIsSorted() === 'asc')
-                    }
+                    onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
                 >
                     EventType
+                    {column.getIsSorted() === 'asc' ? (
+                        <IoMdArrowDropup className="ml-2 h-4 w-4" />
+                    ) : column.getIsSorted() === 'desc' ? (
+                        <IoMdArrowDropdown className="ml-2 h-4 w-4" />
+                    ) : null}
                 </Button>
             );
         },
@@ -78,13 +83,30 @@ export const columns: ColumnDef<IEvent>[] = [
     },
     {
         accessorKey: 'Timestamp',
-        header: () => <div className="text-right">Date</div>,
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+                >
+                    Date
+                    {column.getIsSorted() === 'asc' ? (
+                        <IoMdArrowDropup className="ml-2 h-4 w-4" />
+                    ) : column.getIsSorted() === 'desc' ? (
+                        <IoMdArrowDropdown className="ml-2 h-4 w-4" />
+                    ) : null}
+                </Button>
+            );
+        },
         cell: ({ row }) => {
             const ts: Date = new Date(row.getValue('Timestamp'));
-
-            const formatted = `${ts.getDate()}/${ts.getMonth() + 1}/${ts.getFullYear()} - ${ts.getHours()}-${ts.getMinutes()}`;
-
-            return <div className="text-right font-medium">{formatted}</div>;
+            const formatted = `${ts.getDate()}/${ts.getMonth() + 1}/${ts.getFullYear()} - ${ts.getHours()}:${ts.getMinutes()}`;
+            return <div className="text-left font-medium">{formatted}</div>;
+        },
+        sortingFn: (rowA, rowB, columnId) => {
+            const dateA = new Date(rowA.getValue(columnId));
+            const dateB = new Date(rowB.getValue(columnId));
+            return dateA.getTime() - dateB.getTime();
         }
     },
     {
