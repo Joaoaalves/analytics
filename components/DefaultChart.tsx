@@ -28,6 +28,7 @@ import {
 } from "@/components/ui/chart"
 import { useMemo, useState } from "react"
 
+
 const chartConfig = {
   views: {
     label: "Page Views",
@@ -67,15 +68,15 @@ export default function DefaultChart({chartData, onTimeRangeChange}:ChartProps) 
     }
   return (
     <Card>
-      <CardHeader className="flex items-center space-y-0 border-b p-0 sm:flex-row">
+      <CardHeader className="flex items-center space-y-4 border-b p-0 md:flex-row">
       <div className="flex flex-col justify-center gap-1 px-6 py-5 sm:py-6">
-          <CardTitle>Bar Chart - Interactive</CardTitle>
+          <CardTitle>Page View</CardTitle>
           <CardDescription>
             Showing total <b className="text-black underline">pageview</b> events for the {timeRange == 'last3Months' ? 'last 3 months' : timeRange == 'thisMonth' ? 'this month' : 'this week'}
           </CardDescription>
         </div>
         <Select value={timeRange} onValueChange={handleTimeRangeChange}>
-            <SelectTrigger className="w-80 font-medium mx-auto">
+            <SelectTrigger className="w-80 md:w-48 lg:w-80 font-medium mx-auto !mxt-2">
               <SelectValue placeholder="Select time range" />
             </SelectTrigger>
             <SelectContent>
@@ -84,7 +85,7 @@ export default function DefaultChart({chartData, onTimeRangeChange}:ChartProps) 
               <SelectItem value="thisWeek">This Week</SelectItem>
             </SelectContent>
           </Select>
-        <div className="flex ms-auto">
+        <div className="flex w-full md:w-auto md:ms-auto">
           {["desktop", "mobile"].map((key) => {
             const chart = key as keyof typeof chartConfig
             return (
