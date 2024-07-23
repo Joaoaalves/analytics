@@ -1,7 +1,7 @@
 import { GetServerSidePropsContext } from 'next';
 import { getEvents } from '@/actions/getEvents';
 import { getAccessToken } from '@/actions/getAccessToken';
-import ActionTable from '@/components/ActionTable';
+import EventTable from '@/components/EventTable';
 import DefaultChart from '@/components/DefaultChart';
 
 export interface IEvent {
@@ -14,7 +14,7 @@ export interface IEvent {
     };
 }
 
-export async function getServerSideProps(ctx: GetServerSidePropsContext) {
+export async function getServerSideProps(ctx: GetServerSidePropsContext) { 
     try {
         const { applicationID } = ctx.query;
         const result = await getAccessToken();
@@ -86,7 +86,7 @@ export default function Page({ data, chartData }: { data: IEvent[], chartData: a
     return (
         <section>
             <DefaultChart chartData={chartData} />
-            <ActionTable data={data} />
+            <EventTable data={data} />
         </section>
     );
 }

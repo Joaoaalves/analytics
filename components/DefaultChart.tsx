@@ -60,7 +60,7 @@ export default function DefaultChart({chartData}:{chartData: Data[]}) {
       <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
           <CardTitle>Bar Chart - Interactive</CardTitle>
           <CardDescription>
-            Showing total visitors for the last 3 months
+            Showing total <b className="text-black underline">pageview</b> events for the last 3 months
           </CardDescription>
         </div>
         <div className="flex">
