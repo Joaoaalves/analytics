@@ -24,9 +24,9 @@ import {
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import ActionDetails from '@/components/ActionDetails';
-import type { IAction } from '@/types/aws';
+import type { IEvent } from '@/types/aws';
 
-export const columns: ColumnDef<IAction>[] = [
+export const columns: ColumnDef<IEvent>[] = [
     {
         id: 'select',
         header: ({ table }) => (
@@ -97,7 +97,7 @@ export const columns: ColumnDef<IAction>[] = [
     }
 ];
 
-export default function ActionTable({ data }: { data: IAction[] }) {
+export default function ActionTable({ data }: { data: IEvent[] }) {
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});

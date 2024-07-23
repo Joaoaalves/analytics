@@ -7,7 +7,7 @@ export interface AWSGateway {
     getApplications: (accessToken: string) => Promise<IApplication[] | []>;
 }
 
-export interface IAction {
+export interface IEvent {
     EventId: string;
     EventType: string;
     Timestamp: Date;

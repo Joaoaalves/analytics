@@ -1,10 +1,10 @@
 import { GetServerSidePropsContext } from 'next';
-import { getActions } from '@/actions/getActions';
+import { getEvents } from '@/actions/getEvents';
 import { getAccessToken } from '@/actions/getAccessToken';
 import ActionTable from '@/components/ActionTable';
 import DefaultChart from '@/components/DefaultChart';
 
-export interface IAction {
+export interface IEvent {
     EventId: string;
     EventType: string;
     Timestamp: Date;
@@ -20,7 +20,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
         const result = await getAccessToken();
         if (result) {
             const { accessToken } = result;
-            const actions = await getActions(
+            const actions = await getEvents(
                 accessToken,
                 applicationID as string
             );
@@ -44,7 +44,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     }
 }
 
-function processActionsForChart(actions: IAction[]) {
+function processActionsForChart(actions: IEvent[]) {
     const endDate = new Date();
     endDate.setDate(endDate.getDate() + 1)
 
@@ -82,7 +82,7 @@ function processActionsForChart(actions: IAction[]) {
         .sort((a, b) => a.date.localeCompare(b.date));
 }
 
-export default function Page({ data, chartData }: { data: IAction[], chartData: any[] }) {
+export default function Page({ data, chartData }: { data: IEvent[], chartData: any[] }) {
     return (
         <section>
             <DefaultChart chartData={chartData} />
