@@ -175,20 +175,22 @@ export default function ActionTable({ data }: { data: IEvent[] }) {
                     )}
                 </TableBody>
             </Table>
-            <div className="pagination-controls">
+            <div className="flex w-full items-center p-8 justify-between">
                 <button
                     onClick={() => table.previousPage()}
                     disabled={!table.getCanPreviousPage()}
+                    className='disabled:bg-neutral-400 bg-primary p-3 min-w-48 hover:scale-105 cursor-pointer transition-all duration-150 rounded-md shadow text-white font-bold'
                 >
                     Previous
                 </button>
-                <span>
+                <span className='font-bold'>
                     Page {table.getState().pagination.pageIndex + 1} of{' '}
                     {table.getPageCount()}
                 </span>
                 <button
                     onClick={() => table.nextPage()}
                     disabled={!table.getCanNextPage()}
+                    className='disabled:bg-neutral-400 bg-primary p-3 min-w-48 hover:scale-105 cursor-pointer transition-all duration-150 rounded-md shadow text-white font-bold'
                 >
                     Next
                 </button>
