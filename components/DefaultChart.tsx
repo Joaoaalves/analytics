@@ -36,13 +36,13 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-interface Data {
+interface IChartData {
     date: string,
     mobile: number,
     desktop: number
 }
 
-export default function DefaultChart({chartData}:{chartData: Data[]}) {
+export default function DefaultChart({chartData}:{chartData: IChartData[]}) {
   const [activeChart, setActiveChart] =
     useState<keyof typeof chartConfig>("desktop")
 
