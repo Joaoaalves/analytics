@@ -1,6 +1,6 @@
 'use server';
 
-import dbConnect from '@/lib/db';
+import connectDB from '@/lib/connectDB';
 import axios from 'axios';
 import Token from '@/models/Token';
 
@@ -12,7 +12,7 @@ interface AccesToken {
 export async function getAccessToken(): Promise<AccesToken | null> {
     'use server';
     try {
-        await dbConnect();
+        await connectDB();
         const storedToken = await Token.findOne({});
 
         if (storedToken && new Date(storedToken.expiresAt) > new Date()) {

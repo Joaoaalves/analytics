@@ -1,71 +1,23 @@
-import { GetServerSidePropsContext } from 'next';
-import nookies from 'nookies';
-import { IApplication } from '@/types/aws';
-import { getAccessToken } from '@/actions/getAccessToken';
-import { getApplications } from '@/actions/getApplications';
-import TokenManager from '@/components/TokenManager';
-import CreateNewApplication from '@/components/CreateNewApplication';
+"use client";
+import Login from "@/components/Login";
+import Image from "next/image";
 
-export async function getServerSideProps(ctx: GetServerSidePropsContext) {
-    const cookies = nookies.get(ctx);
-    let accessToken = cookies.accessToken;
-    let tokenExpiration = cookies.tokenExpiration;
-
-    const now = new Date();
-
-    if (accessToken && tokenExpiration && new Date(tokenExpiration) > now) {
-    } else {
-        const result = await getAccessToken();
-        if (result) {
-            const { accessToken: newAccessToken, expiresAt } = result;
-            accessToken = newAccessToken;
-
-            const maxAge = Math.floor(
-                (expiresAt.getTime() - now.getTime()) / 1000
-            );
-
-            nookies.set(ctx, 'accessToken', newAccessToken, {
-                maxAge: maxAge,
-                path: '/',
-                httpOnly: true,
-                secure: process.env.NODE_ENV === 'production'
-            });
-            
-            nookies.set(ctx, 'tokenExpiration', expiresAt.toISOString(), {
-                maxAge: maxAge,
-                path: '/',
-                httpOnly: true,
-                secure: process.env.NODE_ENV === 'production'
-            });
-        } else {
-            return {
-                props: {
-                    applications: []
-                }
-            };
-        }
-    }
-
-    const applications = await getApplications(accessToken);
-
-    return {
-        props: {
-            applications
-        }
-    };
-}
-
-interface HomeProps {
-    applications: IApplication[] | [];
-}
-
-function Home({ applications }: HomeProps) {
-    return (
-        <div>
-            <TokenManager applications={applications} />
-            <CreateNewApplication />
+export default function Home() {
+  return (
+    <main
+      className={`w-full h-[100vh] flex items-center justify-center bg-background`}
+      role="main"
+    >
+        <div className="flex flex-col items-center justify-center">
+          <Image
+            width={185}
+            height={40}
+            src={"/images/logo.svg"}
+            className="mb-12"
+            alt="Logo of Analytics"
+          />
+          <Login />
         </div>
-    );
+    </main>
+  );
 }
-
-export default Home;

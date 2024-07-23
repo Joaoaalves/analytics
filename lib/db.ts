@@ -1,32 +1,26 @@
-import mongoose, { ConnectOptions } from 'mongoose';
-import { MongooseCache } from '@/types/mongoose';
-const MONGODB_URI: string | undefined = process.env.MONGODB_URI;
+import { MongoClient, MongoClientOptions } from "mongodb";
 
-declare global {
-    // eslint-disable-next-line no-var
-    var mongooseCache: MongooseCache;
+if (!process.env.MONGODB_URI) {
+  throw new Error("Please add your Mongo URI to .env.NEXT_PUBLIC_local");
 }
 
-let cached = global.mongooseCache;
+const uri: string = process.env.MONGODB_URI;
+let client: MongoClient;
+let clientPromise: Promise<MongoClient>;
 
-if (!cached) {
-    cached = global.mongooseCache = { conn: null, promise: null };
+if (process.env.NEXT_PUBLIC_NODE_ENV !== "development") {
+  let globalWithMongoClientPromise = global as typeof global & {
+    _mongoClientPromise?: Promise<MongoClient>;
+  };
+
+  if (!globalWithMongoClientPromise._mongoClientPromise) {
+    client = new MongoClient(uri);
+    globalWithMongoClientPromise._mongoClientPromise = client.connect();
+  }
+  clientPromise = globalWithMongoClientPromise._mongoClientPromise;
+} else {
+  client = new MongoClient(uri);
+  clientPromise = client.connect();
 }
 
-async function dbConnect() {
-    if (cached.conn) {
-        return cached.conn;
-    }
-
-    if (!cached.promise) {
-        cached.promise = mongoose
-            .connect(MONGODB_URI as string, {} as ConnectOptions)
-            .then((mongoose) => {
-                return mongoose;
-            });
-    }
-    cached.conn = await cached.promise;
-    return cached.conn;
-}
-
-export default dbConnect;
+export default clientPromise;

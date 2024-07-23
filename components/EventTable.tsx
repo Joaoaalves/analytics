@@ -100,7 +100,7 @@ export const columns: ColumnDef<IEvent>[] = [
         },
         cell: ({ row }) => {
             const ts: Date = new Date(row.getValue('Timestamp'));
-            const formatted = `${ts.getDate()}/${ts.getMonth() + 1}/${ts.getFullYear()} - ${ts.getHours()}:${ts.getMinutes()}`;
+            const formatted = `${ts.getDate()}/${ts.getMonth() + 1}/${ts.getFullYear()} - ${ts.getHours().toLocaleString('pt-BR', {minimumIntegerDigits: 2})}:${ts.getMinutes().toLocaleString('pt-BR', {minimumIntegerDigits: 2})}`;
             return <div className="text-left font-medium">{formatted}</div>;
         },
         sortingFn: (rowA, rowB, columnId) => {
@@ -207,7 +207,7 @@ export default function EventTable({ data }: { data: IEvent[] }) {
                 </button>
                 <span className='font-bold'>
                     Page {table.getState().pagination.pageIndex + 1} of{' '}
-                    {table.getPageCount()}
+                    {Math.max(table.getPageCount(), 1)}
                 </span>
                 <button
                     onClick={() => table.nextPage()}
