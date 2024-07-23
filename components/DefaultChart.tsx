@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
-
+import { type IChartData } from "@/types/chart"
 import {
   Card,
   CardContent,
@@ -10,6 +10,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
+
 import {
   ChartConfig,
   ChartContainer,
@@ -17,10 +27,6 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 import { useMemo, useState } from "react"
-
-export const description = "An interactive bar chart"
-
-
 
 const chartConfig = {
   views: {
@@ -36,34 +42,49 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-interface IChartData {
-    date: string,
-    mobile: number,
-    desktop: number
+
+interface ChartProps {
+  chartData: IChartData[],
+  onTimeRangeChange: (range: string) => void
 }
 
-export default function DefaultChart({chartData}:{chartData: IChartData[]}) {
+export default function DefaultChart({chartData, onTimeRangeChange}:ChartProps) {
   const [activeChart, setActiveChart] =
     useState<keyof typeof chartConfig>("desktop")
+    const [timeRange, setTimeRange] = useState("last3Months")
 
-  const total = useMemo(
-    () => ({
-      desktop: chartData.reduce((acc, curr) => acc + curr.desktop, 0),
-      mobile: chartData.reduce((acc, curr) => acc + curr.mobile, 0),
-    }),
-    []
-  )
-
+    const total = useMemo(
+      () => ({
+        desktop: chartData.reduce((acc, curr) => acc + curr.desktop, 0),
+        mobile: chartData.reduce((acc, curr) => acc + curr.mobile, 0),
+      }),
+      [chartData]
+    )
+  
+    const handleTimeRangeChange = (value: string) => {
+      setTimeRange(value)
+      onTimeRangeChange(value)
+    }
   return (
     <Card>
-      <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
-      <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
+      <CardHeader className="flex items-center space-y-0 border-b p-0 sm:flex-row">
+      <div className="flex flex-col justify-center gap-1 px-6 py-5 sm:py-6">
           <CardTitle>Bar Chart - Interactive</CardTitle>
           <CardDescription>
-            Showing total <b className="text-black underline">pageview</b> events for the last 3 months
+            Showing total <b className="text-black underline">pageview</b> events for the {timeRange == 'last3Months' ? 'last 3 months' : timeRange == 'thisMonth' ? 'this month' : 'this week'}
           </CardDescription>
         </div>
-        <div className="flex">
+        <Select value={timeRange} onValueChange={handleTimeRangeChange}>
+            <SelectTrigger className="w-80 font-medium mx-auto">
+              <SelectValue placeholder="Select time range" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="last3Months">Last 3 Months</SelectItem>
+              <SelectItem value="thisMonth">This Month</SelectItem>
+              <SelectItem value="thisWeek">This Week</SelectItem>
+            </SelectContent>
+          </Select>
+        <div className="flex ms-auto">
           {["desktop", "mobile"].map((key) => {
             const chart = key as keyof typeof chartConfig
             return (
@@ -106,7 +127,7 @@ export default function DefaultChart({chartData}:{chartData: IChartData[]}) {
               minTickGap={32}
               tickFormatter={(value) => {
                 const date = new Date(value)
-                return date.toLocaleDateString("en-US", {
+                return date.toLocaleDateString("pt-BR", {
                   month: "short",
                   day: "numeric",
                 })
@@ -118,7 +139,7 @@ export default function DefaultChart({chartData}:{chartData: IChartData[]}) {
                   className="w-[150px]"
                   nameKey="views"
                   labelFormatter={(value) => {
-                    return new Date(value).toLocaleDateString("en-US", {
+                    return new Date(value).toLocaleDateString("pt-BR", {
                       month: "short",
                       day: "numeric",
                       year: "numeric",

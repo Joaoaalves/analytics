@@ -11,5 +11,8 @@ export interface IEvent {
     EventId: string;
     EventType: string;
     Timestamp: Date;
-    Details: object;
+    Details: {
+        device?: 'desktop' | 'mobile';
+        [key: string]: any;
+    };
 }
