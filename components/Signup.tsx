@@ -80,9 +80,9 @@ export default function Signup(): React.ReactElement {
   }
 
   return (
-    <div className="bg-white p-8 rounded-xl max-w-[90vw]">
-      <h1 className="self-start font-bold text-[32px]">Create account</h1>
-      <p className="self-start text-dark-gray">
+    <div className="bg-white pt-4 p-8 rounded-xl max-w-[90vw]">
+      <h1 className="font-bold text-[32px] text-center">Create account</h1>
+      <p className="text-neutral-600 text-center">
         Let's get you started sharing your links!
       </p>
       <Form {...form}>
@@ -96,7 +96,7 @@ export default function Signup(): React.ReactElement {
             label="Email address"
             placeholder="e.g. alex@email.com"
           >
-            <HiOutlineMail className='w-3.5 h-2.5' />
+            <HiOutlineMail  />
           </Input>
           <Input
             type="password"
@@ -104,7 +104,7 @@ export default function Signup(): React.ReactElement {
             label="Create password"
             placeholder="At least 8 characters"
           >
-            <HiOutlineLockClosed className='w-3.5 h-2.5'/>
+            <HiOutlineLockClosed />
           </Input>
           <Input
             type="password"
@@ -112,7 +112,7 @@ export default function Signup(): React.ReactElement {
             label="Confirm password"
             placeholder="At least 8 characters"
           >
-            <HiOutlineLockClosed className='w-3.5 h-2.5'/>
+            <HiOutlineLockClosed />
           </Input>
 
           <p className="text-xs text-dark-gray">

@@ -6,11 +6,10 @@ import { IApplication } from '@/types/aws';
 import { getAccessToken } from '@/actions/getAccessToken';
 import { getApplications } from '@/actions/getApplications';
 
-import TokenManager from '@/components/TokenManager';
+import Applications from '@/components/Applications';
 import CreateNewApplication from '@/components/CreateNewApplication';
 
 import { getSession } from "next-auth/react";
-import { redirect } from 'next/dist/server/api-utils';
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     const session = await getSession(ctx);
@@ -79,10 +78,12 @@ interface DashboardProps {
 
 function DashBoard({ applications }: DashboardProps) {
     return (
-        <div>
-            <TokenManager applications={applications} />
+        <section className='bg-primary w-screen h-screen'>
+            <Applications applications={applications} />
+            <div className='flex flex-col items-center justify-center w-full mt-8'>
             <CreateNewApplication />
-        </div>
+            </div>
+        </section>
     );
 }
 

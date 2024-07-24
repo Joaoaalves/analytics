@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Input from "./Input";
 import Button from "./Button";
+import { HiOutlineMail, HiOutlineLockClosed  } from "react-icons/hi";
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -51,7 +52,7 @@ export default function Login(): React.ReactElement {
   }
 
   return (
-    <div className="bg-white p-8 rounded-xl max-w-[90vw]">
+    <div className="bg-white pt-4 p-8 rounded-xl max-w-[90vw]">
       <h1 className="self-start font-bold text-[32px]">Login</h1>
       <p className="self-start text-dark-gray">
         Add your details below to get back into the app
@@ -73,7 +74,7 @@ export default function Login(): React.ReactElement {
             label="Email address"
             placeholder="e.g. alex@email.com"
           >
-            <Image src="/images/icon-email.svg" width={13} height={10} alt="Email Icon"/>
+            <HiOutlineMail  />
           </Input>
           <Input
             type="password"
@@ -81,7 +82,7 @@ export default function Login(): React.ReactElement {
             label="Password"
             placeholder="Enter your password"
           >
-            <Image src="/images/icon-password.svg" width={13} height={10} alt="Password Icon"/>
+            <HiOutlineLockClosed />
           </Input>
           <Button text="Login" onClick={form.handleSubmit(onSubmit)} />
           <p className="text-dark-gray text-xs text-center xl:text-md">

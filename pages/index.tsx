@@ -13,7 +13,6 @@ export default function Home() {
             width={185}
             height={40}
             src={"/images/logo.svg"}
-            className="mb-12"
             alt="Logo of Analytics"
           />
           <Login />
