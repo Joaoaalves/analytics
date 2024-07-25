@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
 import Input from "./Input";
 import Button from "./Button";
 import { HiOutlineMail, HiOutlineLockClosed  } from "react-icons/hi";
