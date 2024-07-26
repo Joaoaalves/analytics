@@ -29,7 +29,7 @@ const CreateNewApplication = () => {
 
     return (
         <Dialog>
-            <DialogTrigger className='p-3 px-12 bg-neutral-800 text-white font-semibold rounded-lg hover:bg-neutral-200 hover:text-black cursor-pointer transition-all duration-300'>Create New App</DialogTrigger>
+            <DialogTrigger className='col-span-3 max-h-12 row-start-4 p-3 px-12 bg-neutral-800 text-white font-semibold rounded-lg hover:bg-neutral-200 hover:text-black cursor-pointer transition-all duration-300'>Create New App</DialogTrigger>
             <DialogContent className='bg-primary/20 border-neutral-500 text-white'>
                 <DialogHeader>
                 <DialogTitle>Create New App</DialogTitle>

@@ -9,11 +9,14 @@ import { getApplications } from '@/actions/getApplications';
 import Applications from '@/components/Applications';
 import CreateNewApplication from '@/components/CreateNewApplication';
 
-import Sidepanel from '@/components/SidePanel';
 
 import { getSession } from "next-auth/react";
 import LastErrors from '@/components/LastErrors';
-import { getEvents } from '@/actions/getEvents';
+import { getErrors } from '@/actions/getErrors';
+import { getPageViews } from '@/actions/getPageviews';
+import PageViewsChart from '@/components/PageViewsChart';
+import { processActionsForChart } from '@/lib/chart';
+import ApplicationsDetails from '@/components/ApplicationsDetails';
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     const session = await getSession(ctx);
@@ -68,20 +71,14 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     }
 
     const applications = await getApplications(accessToken);
+    const errors = await getErrors(accessToken);
+    const pageViews = await getPageViews(accessToken);
 
     return {
         props: {
             applications,
-            errors: [
-                {
-                    EventId: '123',
-                    EventType: 'error',
-                    Timestamp:  Date.now(),
-                    Details: {
-                        message: "Placeholder error"
-                    }
-                }
-            ]
+            errors: errors,
+            pageViews: pageViews
         }
     };
 }
@@ -89,18 +86,25 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
 interface DashboardProps {
     applications: IApplication[] | [];
     errors: IEvent[] | [];
+    pageViews: IEvent[] | [];
 }
 
-function DashBoard({ applications, errors }: DashboardProps) {
+function DashBoard({ applications, errors, pageViews }: DashboardProps) {
+    const chartData = processActionsForChart(pageViews, 'thisMonth')
+    
     return (
         <Layout>
-        <section className='bg-black p-8 grid grid-cols-2 grid-rows-[32px_1fr_1fr] gap-6'>
-            <h1 className='text-white text-2xl font-bold text-neutral-300 col-span-2'>Dashboard</h1>
+        <section className='bg-black p-8 grid grid-cols-2 grid-rows-[28px_384px_384px] gap-x-6'>
+            <h1 className='text-white text-2xl font-bold col-span-2'>Dashboard</h1>
             <Applications applications={applications} />
             <LastErrors errors={errors}/>
-            <div className='flex flex-col items-center justify-center w-full mt-8'>
-                <CreateNewApplication />
+
+            <div className='col-span-2 gap-x-6 grid grid-cols-[480px_1fr] grid-rows-1 max-h-96 items-end'>
+                <ApplicationsDetails apps={applications.length} errors={errors.length} pageviews={pageViews.length} />
+
+                <PageViewsChart chartData={chartData}/>
             </div>
+
         </section>
         </Layout>
     );
