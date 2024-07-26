@@ -5,7 +5,7 @@ import Image from "next/image";
 export default function Home() {
   return (
     <main
-      className={`w-full h-[100vh] flex items-center justify-center bg-background`}
+      className={`w-full h-[100vh] flex items-center justify-center`}
       role="main"
     >
         <div className="flex flex-col items-center justify-center">

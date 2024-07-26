@@ -16,7 +16,7 @@ interface ActionDetailsProps {
 const ActionDetails: React.FC<ActionDetailsProps> = ({ details }) => {
     return (
         <Dialog>
-            <DialogTrigger className='ms-auto bg-primary' asChild>
+            <DialogTrigger className='bg-primary' asChild>
                 <Button variant="outline">See Details</Button>
             </DialogTrigger>
             <DialogContent className="bg-primary text-white border-neutral-600">

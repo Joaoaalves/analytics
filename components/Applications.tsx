@@ -8,7 +8,7 @@ export default function Applications({
     applications: IApplication[] | [];
 }) {
     return (
-        <div className="grid grid-cols-3 gap-4 p-4">
+        <div className="grid grid-cols-3 grid-rows-3 gap-4">
             {applications &&
                 applications.map((app) => (
                     <Application

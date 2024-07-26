@@ -42,7 +42,7 @@ const Application = ({ name, id }: ApplicationProps) => {
 
     return (
         <HoverCard>
-            <HoverCardTrigger onClick={handleCardClick} className="text-center text-white border border-white/20 p-4 rounded shadow font-bold hover:bg-neutral-900 cursor-pointer transition-all duration-300">
+            <HoverCardTrigger onClick={handleCardClick} className="flex items-center justify-center text-white border border-white/20 p-4 rounded shadow font-bold hover:bg-neutral-200 hover:text-black cursor-pointer transition-all duration-300">
                 {name}
             </HoverCardTrigger>
             <HoverCardContent className='flex flex-col items-start justify-between bg-neutral-900 border-none shadow-white/5 text-white w-full'>
