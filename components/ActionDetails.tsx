@@ -14,17 +14,20 @@ interface ActionDetailsProps {
 }
 
 const ActionDetails: React.FC<ActionDetailsProps> = ({ details }) => {
-    const formattedDetails = JSON.stringify(details, null, 2);
-
     return (
         <Dialog>
-            <DialogTrigger className='ms-auto' asChild>
+            <DialogTrigger className='bg-primary' asChild>
                 <Button variant="outline">See Details</Button>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className="bg-primary text-white border-neutral-600">
                 <DialogTitle>Event Details</DialogTitle>
                 <DialogDescription>
-                    <pre className="whitespace-pre-wrap">{formattedDetails}</pre>
+                    {details && Object.entries(details).map(([key, value]) => (
+                        <div className='grid grid-cols-2 text-white'>
+                            <span className="font-bold">{key}</span>
+                            <span>{value}</span>
+                        </div>
+                    )) }
                 </DialogDescription>
             </DialogContent>
         </Dialog>

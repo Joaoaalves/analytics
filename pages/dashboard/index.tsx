@@ -1,7 +1,7 @@
 import { GetServerSidePropsContext } from 'next';
 import nookies from 'nookies';
-
-import { IApplication } from '@/types/aws';
+import Layout from '@/components/Layout';
+import { IApplication, IEvent } from '@/types/aws';
 
 import { getAccessToken } from '@/actions/getAccessToken';
 import { getApplications } from '@/actions/getApplications';
@@ -9,7 +9,11 @@ import { getApplications } from '@/actions/getApplications';
 import Applications from '@/components/Applications';
 import CreateNewApplication from '@/components/CreateNewApplication';
 
+import Sidepanel from '@/components/SidePanel';
+
 import { getSession } from "next-auth/react";
+import LastErrors from '@/components/LastErrors';
+import { getEvents } from '@/actions/getEvents';
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     const session = await getSession(ctx);
@@ -36,7 +40,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
         if (result) {
             const { accessToken: newAccessToken, expiresAt } = result;
             accessToken = newAccessToken;
-
+            
             const maxAge = Math.floor(
                 (expiresAt.getTime() - now.getTime()) / 1000
             );
@@ -67,23 +71,38 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
 
     return {
         props: {
-            applications
+            applications,
+            errors: [
+                {
+                    EventId: '123',
+                    EventType: 'error',
+                    Timestamp:  Date.now(),
+                    Details: {
+                        message: "Placeholder error"
+                    }
+                }
+            ]
         }
     };
 }
 
 interface DashboardProps {
     applications: IApplication[] | [];
+    errors: IEvent[] | [];
 }
 
-function DashBoard({ applications }: DashboardProps) {
+function DashBoard({ applications, errors }: DashboardProps) {
     return (
-        <section className='bg-primary w-screen h-screen'>
+        <Layout>
+        <section className='bg-black p-8 grid grid-cols-2 grid-rows-[32px_1fr_1fr] gap-6'>
+            <h1 className='text-white text-2xl font-bold text-neutral-300 col-span-2'>Dashboard</h1>
             <Applications applications={applications} />
+            <LastErrors errors={errors}/>
             <div className='flex flex-col items-center justify-center w-full mt-8'>
-            <CreateNewApplication />
+                <CreateNewApplication />
             </div>
         </section>
+        </Layout>
     );
 }
 

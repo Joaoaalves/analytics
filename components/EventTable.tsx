@@ -33,6 +33,7 @@ export const columns: ColumnDef<IEvent>[] = [
         id: 'select',
         header: ({ table }) => (
             <Checkbox
+                className="border-neutral-400"
                 checked={
                     table.getIsAllPageRowsSelected() ||
                     (table.getIsSomePageRowsSelected() && 'indeterminate')
@@ -45,6 +46,7 @@ export const columns: ColumnDef<IEvent>[] = [
         ),
         cell: ({ row }) => (
             <Checkbox
+                className="border-neutral-400"
                 checked={row.getIsSelected()}
                 onCheckedChange={(value) => row.toggleSelected(!!value)}
                 aria-label="Select row"
@@ -149,10 +151,10 @@ export default function EventTable({ data }: { data: IEvent[] }) {
 
     return (
         <>
-            <Table>
+            <Table className='text-white'>
                 <TableHeader>
                     {table.getHeaderGroups().map((headerGroup) => (
-                        <TableRow key={headerGroup.id}>
+                        <TableRow className='hover:bg-black' key={headerGroup.id}>
                             {headerGroup.headers.map((header) => {
                                 return (
                                     <TableHead key={header.id}>
@@ -174,6 +176,7 @@ export default function EventTable({ data }: { data: IEvent[] }) {
                             <TableRow
                                 key={row.id}
                                 data-state={row.getIsSelected() && 'selected'}
+                                className={`hover:bg-black ${row.getIsSelected() ? '!bg-black' : ''}`}
                             >
                                 {row.getVisibleCells().map((cell, index) => (
                                     <TableCell className={`${index == 4 ? 'flex items-end' : ''}`} key={cell.id}>
@@ -201,18 +204,18 @@ export default function EventTable({ data }: { data: IEvent[] }) {
                 <button
                     onClick={() => table.previousPage()}
                     disabled={!table.getCanPreviousPage()}
-                    className='disabled:bg-secondary/50 disabled:cursor-not-allowed disabled:hover:scale-100 bg-secondary p-3 min-w-48 hover:scale-105 cursor-pointer transition-all duration-150 rounded-md shadow text-white font-bold'
+                    className='disabled:bg-black/20 disabled:cursor-not-allowed disabled:hover:scale-100 bg-black p-3 min-w-48 hover:scale-105 cursor-pointer transition-all duration-150 rounded-md shadow text-white font-bold'
                 >
                     Previous
                 </button>
-                <span className='font-bold'>
+                <span className='font-bold text-white'>
                     Page {table.getState().pagination.pageIndex + 1} of{' '}
                     {Math.max(table.getPageCount(), 1)}
                 </span>
                 <button
                     onClick={() => table.nextPage()}
                     disabled={!table.getCanNextPage()}
-                    className='disabled:bg-primary/50 disabled:cursor-not-allowed disabled:hover:scale-100 bg-primary p-3 min-w-48 hover:scale-105 cursor-pointer transition-all duration-150 rounded-md shadow text-white font-bold'
+                    className='disabled:bg-black/20 disabled:cursor-not-allowed disabled:hover:scale-100 bg-black p-3 min-w-48 hover:scale-105 cursor-pointer transition-all duration-150 rounded-md shadow text-white font-bold'
                 >
                     Next
                 </button>

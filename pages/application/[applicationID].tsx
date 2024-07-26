@@ -93,7 +93,7 @@ export default function Page({ data }: { data: IEvent[] }) {
     };
 
     return (
-        <section>
+        <section className='bg-primary'>
             <DefaultChart chartData={chartData} onTimeRangeChange={handleTimeRangeChange}/>
             <EventTable data={data} />
         </section>
