@@ -17,12 +17,12 @@ const links : ILink[] = [
     icon: <LuLayoutDashboard />
   },
   {
-    href: '/pagespeed',
+    href: '/dashboard/pagespeed',
     label: 'Pagespeed',
     icon: <LuClock2 />
   },
   {
-    href: '/errors',
+    href: '/dashboard/errors',
     label: 'Errors',
     icon: <LuCode2 />
   },
