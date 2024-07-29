@@ -67,8 +67,8 @@ export default function DefaultChart({chartData, onTimeRangeChange}:ChartProps) 
       onTimeRangeChange(value)
     }
   return (
-    <Card>
-      <CardHeader className="flex items-center border-b p-0 md:flex-row bg-primary text-white">
+    <Card className="border-none bg-primary">
+      <CardHeader className="flex items-center p-0 md:flex-row bg-primary rounded-lg text-white">
       <div className="flex flex-col justify-center gap-1 px-6 py-5 sm:py-6">
           <CardTitle>Page View</CardTitle>
           <CardDescription>
@@ -106,7 +106,7 @@ export default function DefaultChart({chartData, onTimeRangeChange}:ChartProps) 
           })}
         </div>
       </CardHeader>
-      <CardContent className="px-2 sm:p-6 bg-primary">
+      <CardContent className="px-2 sm:p-6 bg-primary rounded-lg">
         <ChartContainer
           config={chartConfig}
           className="aspect-auto h-[250px] w-full"

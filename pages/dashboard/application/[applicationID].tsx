@@ -7,6 +7,8 @@ import { useState } from 'react';
 import { type IEvent } from '@/types/aws';
 
 import { processActionsForChart } from '@/lib/chart';
+import Layout from '@/components/Layout';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) { 
     try {
@@ -49,9 +51,12 @@ export default function Page({ data }: { data: IEvent[] }) {
     };
 
     return (
-        <section className='bg-primary'>
-            <DefaultChart chartData={chartData} onTimeRangeChange={handleTimeRangeChange}/>
-            <EventTable data={data} />
-        </section>
+        <Layout>
+            <ScrollArea className='bg-black p-8 space-y-8'>
+                <DefaultChart chartData={chartData} onTimeRangeChange={handleTimeRangeChange}/>
+                <EventTable data={data} />
+            </ScrollArea>
+        </Layout>
+
     );
 }

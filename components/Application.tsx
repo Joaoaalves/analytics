@@ -18,7 +18,7 @@ const Application = ({ name, id }: ApplicationProps) => {
     const router = useRouter();
 
     const handleCardClick = () => {
-        router.push(`/application/${id}`);
+        router.push(`/dashboard/application/${id}`);
     };
 
     const handleDeleteApplication = async () => {

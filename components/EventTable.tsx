@@ -204,7 +204,7 @@ export default function EventTable({ data }: { data: IEvent[] }) {
                 <button
                     onClick={() => table.previousPage()}
                     disabled={!table.getCanPreviousPage()}
-                    className='disabled:bg-black/20 disabled:cursor-not-allowed disabled:hover:scale-100 bg-black p-3 min-w-48 hover:scale-105 cursor-pointer transition-all duration-150 rounded-md shadow text-white font-bold'
+                    className='disabled:bg-primary/20 disabled:cursor-not-allowed disabled:hover:scale-100 bg-primary p-3 min-w-48 hover:scale-105 cursor-pointer transition-all duration-150 rounded-md shadow text-white font-bold'
                 >
                     Previous
                 </button>
@@ -215,7 +215,7 @@ export default function EventTable({ data }: { data: IEvent[] }) {
                 <button
                     onClick={() => table.nextPage()}
                     disabled={!table.getCanNextPage()}
-                    className='disabled:bg-black/20 disabled:cursor-not-allowed disabled:hover:scale-100 bg-black p-3 min-w-48 hover:scale-105 cursor-pointer transition-all duration-150 rounded-md shadow text-white font-bold'
+                    className='disabled:bg-primary/20 disabled:cursor-not-allowed disabled:hover:scale-100 bg-primary p-3 min-w-48 hover:scale-105 cursor-pointer transition-all duration-150 rounded-md shadow text-white font-bold'
                 >
                     Next
                 </button>
