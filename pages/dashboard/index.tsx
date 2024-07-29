@@ -7,7 +7,6 @@ import { getAccessToken } from '@/actions/getAccessToken';
 import { getApplications } from '@/actions/getApplications';
 
 import Applications from '@/components/Applications';
-import CreateNewApplication from '@/components/CreateNewApplication';
 
 
 import { getSession } from "next-auth/react";

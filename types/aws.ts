@@ -1,6 +1,7 @@
 export interface IApplication {
     ApplicationId: string;
     ApplicationName: string;
+    ApplicationURL: string;
 }
 
 export interface AWSGateway {

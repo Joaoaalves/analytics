@@ -2,6 +2,7 @@ import React from 'react';
 import { IApplication } from '@/types/aws';
 import Application from './Application';
 import CreateNewApplication from './CreateNewApplication';
+
 export default function Applications({
     applications
 }: {
