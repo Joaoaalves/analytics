@@ -45,7 +45,7 @@ export default function CustomInput({
               {children}
               <Input
                 type={type}
-                className={`${className} ps-0 border-none !outline-none !ring-0 !border-0 focus-visible:ring-offset-0 text-sm text-dark-gray`}
+                className={`${className} ps-0 border-none !outline-none !ring-0 !border-0 !bg-transparent focus-visible:ring-offset-0 text-sm text-dark-gray`}
                 {...field}
                 id={id}
                 placeholder={placeholder}

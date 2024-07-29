@@ -5,7 +5,7 @@ import { Toaster } from "sonner";
 export default function Home() {
     return (
         <main
-            className={`w-full h-[100vh] flex items-center justify-center bg-background`}
+            className={`w-full h-[100vh] flex items-center justify-center bg-black`}
         >
             <div className="flex flex-col items-center justify-center">
                 <Image

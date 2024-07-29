@@ -51,7 +51,7 @@ export default function Login(): React.ReactElement {
   }
 
   return (
-    <div className="bg-white pt-4 p-8 rounded-xl max-w-[90vw]">
+    <div className="pt-4 p-8 rounded-xl max-w-[90vw] bg-primary text-white">
       <h1 className="self-start font-bold text-[32px]">Login</h1>
       <p className="self-start text-dark-gray">
         Add your details below to get back into the app
@@ -86,7 +86,7 @@ export default function Login(): React.ReactElement {
           <Button text="Login" onClick={form.handleSubmit(onSubmit)} />
           <p className="text-dark-gray text-xs text-center xl:text-md">
             Don't have an account?{" "}
-            <Link className="text-primary cursor-pointer font-bold" href="/signup">
+            <Link className="text-white underline cursor-pointer font-bold" href="/signup">
               Create account
             </Link>
           </p>

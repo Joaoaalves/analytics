@@ -80,9 +80,9 @@ export default function Signup(): React.ReactElement {
   }
 
   return (
-    <div className="bg-white pt-4 p-8 rounded-xl max-w-[90vw]">
+    <div className="bg-primary text-white pt-4 p-8 rounded-xl max-w-[90vw]">
       <h1 className="font-bold text-[32px] text-center">Create account</h1>
-      <p className="text-neutral-600 text-center">
+      <p className="text-neutral-300 text-center">
         Let's get you started sharing your links!
       </p>
       <Form {...form}>
@@ -122,7 +122,7 @@ export default function Signup(): React.ReactElement {
           <Button text="Create new account"  />
           <p className="text-dark-gray text-xs text-center xl:text-md">
             Already have an account?{" "}
-            <Link className="text-primary cursor-pointer font-bold" href="/">
+            <Link className="text-white underline cursor-pointer font-bold" href="/">
               Login
             </Link>
           </p>
