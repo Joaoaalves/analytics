@@ -17,6 +17,8 @@ import PageViewsChart from '@/components/PageViewsChart';
 import { processActionsForChart } from '@/lib/chart';
 import ApplicationsDetails from '@/components/ApplicationsDetails';
 
+import { ScrollArea } from "@/components/ui/scroll-area"
+
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     const session = await getSession(ctx);
     
@@ -93,18 +95,19 @@ function DashBoard({ applications, errors, pageViews }: DashboardProps) {
     
     return (
         <Layout>
-        <section className='bg-black p-8 grid grid-cols-2 grid-rows-[28px_384px_384px] gap-x-6'>
-            <h1 className='text-white text-2xl font-bold col-span-2'>Dashboard</h1>
-            <Applications applications={applications} />
-            <LastErrors errors={errors}/>
+            <ScrollArea>
+                <section className='bg-black p-8 grid grid-cols-2 grid-rows-[28px_1fr_1fr] gap-6'>
+                    <h1 className='text-white text-2xl font-bold col-span-2'>Dashboard</h1>
+                    <Applications applications={applications} />
+                    <LastErrors errors={errors}/>
 
-            <div className='col-span-2 gap-x-6 grid grid-cols-[480px_1fr] grid-rows-1 max-h-96 items-end'>
-                <ApplicationsDetails apps={applications.length} errors={errors.length} pageviews={pageViews.length} />
+                    <div className='col-span-2 gap-x-6 grid grid-cols-[480px_1fr] grid-rows-1 max-h-96 items-end'>
+                        <ApplicationsDetails apps={applications.length} errors={errors.length} pageviews={pageViews.length} />
 
-                <PageViewsChart chartData={chartData}/>
-            </div>
-
-        </section>
+                        <PageViewsChart chartData={chartData}/>
+                    </div>
+                </section>
+            </ScrollArea>
         </Layout>
     );
 }
