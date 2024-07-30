@@ -13,6 +13,7 @@ export default function Home() {
                     height={100}
                     src={"/images/logo.svg"}
                     alt="Logo of Analytics"
+                    className="drop-shadow-[0px_0px_6px_rgba(255,255,255,1)]"
                 />
                 <Signup />
             </div>
