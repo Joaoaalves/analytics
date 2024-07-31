@@ -1,96 +1,35 @@
+// Types
 import { GetServerSidePropsContext } from 'next';
-import nookies from 'nookies';
-import Layout from '@/components/Layout';
 import { IApplication, IEvent } from '@/types/aws';
 
-import { getAccessToken } from '@/actions/getAccessToken';
-import { getApplications } from '@/actions/getApplications';
-
+// Components
+import Layout from '@/components/Layout';
 import Applications from '@/components/Applications';
-
-
-import { getSession } from "next-auth/react";
 import LastErrors from '@/components/LastErrors';
-import { getErrors } from '@/actions/getErrors';
-import { getPageViews } from '@/actions/getPageviews';
 import PageViewsChart from '@/components/PageViewsChart';
-import { processActionsForChart } from '@/lib/chart';
 import ApplicationsDetails from '@/components/ApplicationsDetails';
-
 import { ScrollArea } from "@/components/ui/scroll-area"
 
-export async function getServerSideProps(ctx: GetServerSidePropsContext) {
-    const session = await getSession(ctx);
-    
-    if (!session){
-        return {
-            
-            redirect: {
-                destination: "/",
-                permanent: false
-            }
-        }
-    }
+// Server Actions
+import { fetchAccessToken } from '@/actions/fetchAccessToken';
+import { getApplications } from '@/actions/getApplications';
+import { getErrors } from '@/actions/getErrors';
+import { getPageViews } from '@/actions/getPageviews';
+import { getSession } from 'next-auth/react';
 
-    const cookies = nookies.get(ctx);
-    let accessToken = cookies.accessToken;
-    let tokenExpiration = cookies.tokenExpiration;
+// Lib
+import { processActionsForChart } from '@/lib/chart';
+import { setAccessTokenCookie } from '@/lib/aws';
+import { getAccessTokenFromCookie } from '@/lib/cookies';
 
-    const now = new Date();
-
-    if (accessToken && tokenExpiration && new Date(tokenExpiration) > now) {
-    } else {
-        const result = await getAccessToken();
-        if (result) {
-            const { accessToken: newAccessToken, expiresAt } = result;
-            accessToken = newAccessToken;
-            
-            const maxAge = Math.floor(
-                (expiresAt.getTime() - now.getTime()) / 1000
-            );
-
-            nookies.set(ctx, 'accessToken', newAccessToken, {
-                maxAge: maxAge,
-                path: '/',
-                httpOnly: true,
-                secure: process.env.NODE_ENV === 'production'
-            });
-            
-            nookies.set(ctx, 'tokenExpiration', expiresAt.toISOString(), {
-                maxAge: maxAge,
-                path: '/',
-                httpOnly: true,
-                secure: process.env.NODE_ENV === 'production'
-            });
-        } else {
-            return {
-                props: {
-                    applications: []
-                }
-            };
-        }
-    }
-
-    const applications = await getApplications(accessToken);
-    const errors = await getErrors(accessToken);
-    const pageViews = await getPageViews(accessToken);
-
-    return {
-        props: {
-            applications,
-            errors: errors,
-            pageViews: pageViews
-        }
-    };
-}
-
+// Custom Type
 interface DashboardProps {
     applications: IApplication[] | [];
     errors: IEvent[] | [];
     pageViews: IEvent[] | [];
 }
 
-function DashBoard({ applications, errors, pageViews }: DashboardProps) {
+export default function DashBoard({ applications, errors, pageViews }: DashboardProps) {
     const chartData = processActionsForChart(pageViews, 'thisMonth')
     
     return (
@@ -112,4 +51,39 @@ function DashBoard({ applications, errors, pageViews }: DashboardProps) {
     );
 }
 
-export default DashBoard;
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
+    const session = await getSession(ctx)
+    if(!session)
+        return { redirect: { destination: "/", permanent: false } };
+
+    const {accessToken, tokenExpiration} = getAccessTokenFromCookie(ctx)
+
+    const now = new Date();
+
+    if (!(accessToken && tokenExpiration && new Date(tokenExpiration) > now)) {
+        const result = await fetchAccessToken();
+        if (result) {
+            const { accessToken: newAccessToken, expiresAt } = result;
+            
+            setAccessTokenCookie(newAccessToken, expiresAt, ctx)
+        } else {
+            return {
+                props: {
+                    applications: []
+                }
+            };
+        }
+    }
+
+    const applications = await getApplications(accessToken);
+    const errors = await getErrors(accessToken);
+    const pageViews = await getPageViews(accessToken);
+
+    return {
+        props: {
+            applications,
+            errors: errors,
+            pageViews: pageViews
+        }
+    };
+}

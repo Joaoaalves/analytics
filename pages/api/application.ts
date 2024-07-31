@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import axios from 'axios';
 
 const API_URL = process.env.AWS_API_URL;
-import { getAccessToken } from '@/actions/getAccessToken';
+import { getAccessToken } from '@/actions/fetchAccessToken';
 
 export default async function handler(
     req: NextApiRequest,

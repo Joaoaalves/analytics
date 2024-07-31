@@ -9,7 +9,7 @@ interface AccesToken {
     expiresAt: Date;
 }
 
-export async function getAccessToken(): Promise<AccesToken | null> {
+export async function fetchAccessToken(): Promise<AccesToken | null> {
     'use server';
     try {
         await connectDB();

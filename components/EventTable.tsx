@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import {Table as ITable} from "@tanstack/react-table"
+
 import {
     ColumnDef,
     ColumnFiltersState,
@@ -27,6 +29,7 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import ActionDetails from '@/components/ActionDetails';
 import type { IEvent } from '@/types/aws';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 export const columns: ColumnDef<IEvent>[] = [
     {
@@ -151,75 +154,81 @@ export default function EventTable({ data }: { data: IEvent[] }) {
 
     return (
         <>
-            <Table className='text-white'>
-                <TableHeader>
-                    {table.getHeaderGroups().map((headerGroup) => (
-                        <TableRow className='hover:bg-black' key={headerGroup.id}>
-                            {headerGroup.headers.map((header) => {
-                                return (
-                                    <TableHead key={header.id}>
-                                        {header.isPlaceholder
-                                            ? null
-                                            : flexRender(
-                                                header.column.columnDef.header,
-                                                header.getContext()
-                                            )}
-                                    </TableHead>
-                                );
-                            })}
-                        </TableRow>
-                    ))}
-                </TableHeader>
-                <TableBody>
-                    {table.getRowModel().rows?.length ? (
-                        table.getRowModel().rows.map((row) => (
-                            <TableRow
-                                key={row.id}
-                                data-state={row.getIsSelected() && 'selected'}
-                                className={`hover:bg-black ${row.getIsSelected() ? '!bg-black' : ''}`}
-                            >
-                                {row.getVisibleCells().map((cell, index) => (
-                                    <TableCell className={`${index == 4 ? 'flex items-end' : ''}`} key={cell.id}>
-                                        {flexRender(
-                                            cell.column.columnDef.cell,
-                                            cell.getContext()
-                                        )}
-                                    </TableCell>
-                                ))}
+                <Table className='text-white'>
+                    <TableHeader>
+                        {table.getHeaderGroups().map((headerGroup) => (
+                            <TableRow className='hover:bg-black' key={headerGroup.id}>
+                                {headerGroup.headers.map((header) => {
+                                    return (
+                                        <TableHead key={header.id}>
+                                            {header.isPlaceholder
+                                                ? null
+                                                : flexRender(
+                                                    header.column.columnDef.header,
+                                                    header.getContext()
+                                                )}
+                                        </TableHead>
+                                    );
+                                })}
                             </TableRow>
-                        ))
-                    ) : (
-                        <TableRow>
-                            <TableCell
-                                colSpan={columns.length}
-                                className="h-24 text-center"
-                            >
-                                No results.
-                            </TableCell>
-                        </TableRow>
-                    )}
-                </TableBody>
-            </Table>
-            <div className="flex w-full items-center p-8 justify-between">
-                <button
-                    onClick={() => table.previousPage()}
-                    disabled={!table.getCanPreviousPage()}
-                    className='disabled:bg-primary/20 disabled:cursor-not-allowed disabled:hover:scale-100 bg-primary p-3 min-w-48 hover:scale-105 cursor-pointer transition-all duration-150 rounded-md shadow text-white font-bold'
-                >
-                    Previous
-                </button>
-                <span className='font-bold text-white'>
-                    Page {table.getState().pagination.pageIndex + 1} of{' '}
-                    {Math.max(table.getPageCount(), 1)}
-                </span>
-                <button
-                    onClick={() => table.nextPage()}
-                    disabled={!table.getCanNextPage()}
-                    className='disabled:bg-primary/20 disabled:cursor-not-allowed disabled:hover:scale-100 bg-primary p-3 min-w-48 hover:scale-105 cursor-pointer transition-all duration-150 rounded-md shadow text-white font-bold'
-                >
-                    Next
-                </button>
-            </div>
+                        ))}
+                    </TableHeader>
+                    <TableBody>
+                        {table.getRowModel().rows?.length ? (
+                            table.getRowModel().rows.map((row) => (
+                                <TableRow
+                                    key={row.id}
+                                    data-state={row.getIsSelected() && 'selected'}
+                                    className={`hover:bg-black ${row.getIsSelected() ? '!bg-black' : ''}`}
+                                >
+                                    {row.getVisibleCells().map((cell, index) => (
+                                        <TableCell className={`${index == 4 ? 'flex items-end' : ''}`} key={cell.id}>
+                                            {flexRender(
+                                                cell.column.columnDef.cell,
+                                                cell.getContext()
+                                            )}
+                                        </TableCell>
+                                    ))}
+                                </TableRow>
+                            ))
+                        ) : (
+                            <TableRow>
+                                <TableCell
+                                    colSpan={columns.length}
+                                    className="h-24 text-center"
+                                >
+                                    No results.
+                                </TableCell>
+                            </TableRow>
+                        )}
+                    </TableBody>
+                </Table>
+            <TableControls table={table} />
         </>
     );
+}
+
+function TableControls({table}:{table:ITable<IEvent>}) {
+    return (
+        <div className="grid grid-cols-3 w-full place-items-center p-8">
+            <button
+                onClick={() => table.previousPage()}
+                disabled={!table.getCanPreviousPage()}
+                className='disabled:bg-primary/20 disabled:cursor-not-allowed disabled:hover:scale-100 bg-primary p-3 min-w-48 hover:scale-105 cursor-pointer transition-all duration-150 rounded-md shadow text-white font-bold'
+            >
+                Previous
+            </button>
+            <span className='font-bold text-white'>
+                Page {table.getState().pagination.pageIndex + 1} of{' '}
+                {Math.max(table.getPageCount(), 1)}
+            </span>
+            <button
+                onClick={() => table.nextPage()}
+                disabled={!table.getCanNextPage()}
+                className='disabled:bg-primary/20 disabled:cursor-not-allowed disabled:hover:scale-100 bg-primary p-3 min-w-48 hover:scale-105 cursor-pointer transition-all duration-150 rounded-md shadow text-white font-bold'
+            >
+                Next
+            </button>
+        </div>
+    )
 }

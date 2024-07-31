@@ -39,7 +39,7 @@ export default function Sidepanel(){
       <nav className="w-full">
         <ul>
           {links && links.map((link) => (
-            <li>
+            <li key={link.label}>
               <Link href={link.href} icon={link.icon} label={link.label} />
             </li>
           ))}
